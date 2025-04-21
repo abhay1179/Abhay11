@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}Expense Reports - Expense Tracker{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4"><i class="fas fa-chart-line me-2"></i>Expense Reports</h2>
+
+    <!-- Filter Form -->
+    <form method="GET" class="row g-3 mb-4">
+        <div class="col-md-3">
+            <label for="start_date" class="form-label">Start Date</label>
+            <input type="date" class="form-control" id="start_date" name="start_date" value="{{ start_date }}">
+        </div>
+        <div class="col-md-3">
+            <label for="end_date" class="form-label">End Date</label>
+            <input type="date" class="form-control" id="end_date" name="end_date" value="{{ end_date }}">
+        </div>
+        <div class="col-md-3">
+            <label for="category" class="form-label">Category</label>
+            <select class="form-select" id="category" name="category">
+                {% for cat in categories %}
+                <option value="{{ cat }}" {% if cat == selected_category %}selected{% endif %}>{{ cat }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-3 d-flex align-items-end">
+            <button type="submit" class="btn btn-primary w-100"><i class="fas fa-filter me-2"></i>Apply Filters</button>
+        </div>
+    </form>
+
+    <!-- Expense Table -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0"><i class="fas fa-list me-2"></i>Filtered Expenses</h5>
+        </div>
+        <div class="card-body table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Amount</th>
+                        <th>Category</th>
+                        <th>Date</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for expense in expenses %}
+                    <tr>
+                        <td>{{ expense[0] }}</td>
+                        <td>{{ expense[1] | currency }}</td>
+                        <td>{{ expense[2] }}</td>
+                        <td>{{ expense[3] }}</td>
+                        <td>{{ expense[4] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="row">
+        {% if charts.category_pie %}
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-chart-pie me-2"></i>Expenses by Category</h5>
+                </div>
+                <div class="card-body text-center">
+                    <img src="data:image/png;base64,{{ charts.category_pie }}" class="img-fluid rounded shadow-sm" alt="Category Pie Chart">
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if charts.time_series %}
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0"><i class="fas fa-chart-line me-2"></i>Expenses Over Time</h5>
+                </div>
+                <div class="card-body text-center">
+                    <img src="data:image/png;base64,{{ charts.time_series }}" class="img-fluid rounded shadow-sm" alt="Time Series Chart">
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

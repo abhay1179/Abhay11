@@ -1,0 +1,19 @@
+First you need to install these Libraries
+
+Flask
+pandas
+matplotlib
+seaborn
+werkzeug
+
+
+
+----------------------
+python -m venv venv
+
+venv\Scripts\activate
+
+app1.py
+--------------------------
+
+You can Ragister first on the login page

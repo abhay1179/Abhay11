@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}Register - Expense Tracker{% endblock %}
+
+{% block content %}
+<div class="auth-form">
+    <h2 class="text-center mb-4">
+        <i class="fas fa-user-plus me-2"></i>Create an Account
+    </h2>
+    
+    <form method="post">
+        <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                <input type="text" class="form-control" id="username" name="username" required autofocus>
+            </div>
+            <div class="form-text">Choose a unique username</div>
+        </div>
+        
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <div class="form-text">Use a strong password with at least 8 characters</div>
+        </div>
+        
+        <div class="mb-3">
+            <label for="confirm_password" class="form-label">Confirm Password</label>
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+            </div>
+        </div>
+        
+        <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-success btn-lg">
+                <i class="fas fa-user-plus me-2"></i>Register
+            </button>
+        </div>
+        
+        <div class="text-center mt-3">
+            <p>Already have an account? <a href="{{ url_for('login') }}">Login here</a></p>
+        </div>
+    </form>
+</div>
+
+<script>
+    // Client-side password validation
+    document.querySelector('form').addEventListener('submit', function(e) {
+        var password = document.getElementById('password');
+        var confirm = document.getElementById('confirm_password');
+        
+        if (password.value !== confirm.value) {
+            e.preventDefault();
+            alert('Passwords do not match!');
+            return false;
+        }
+        
+        if (password.value.length < 8) {
+            e.preventDefault();
+            alert('Password must be at least 8 characters long!');
+            return false;
+        }
+    });
+</script>
+{% endblock %}
